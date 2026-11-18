@@ -108,7 +108,11 @@ class BotEngine(private val context: Context, private val store: SettingsStore) 
         }
     }
 
-    fun setPanelOpen(open: Boolean) {
+    /**
+     * Kept apart from the [panelOpen] property: a function called setPanelOpen
+     * would clash with the JVM setter generated for the property.
+     */
+    fun setPanelState(open: Boolean) {
         if (panelOpen == open) return
         panelOpen = open
         if (open) logLine(context.getString(R.string.log_paused_panel))

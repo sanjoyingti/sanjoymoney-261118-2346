@@ -120,7 +120,7 @@ class OverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewM
         createChannel()
         startForegroundInternal()
         engine.resetSession()
-        engine.setPanelOpen(false)
+        engine.setPanelState(false)
         showBubble()
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_START)
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
@@ -172,7 +172,7 @@ class OverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewM
         panelView = null
         calibrationView = null
         toastView = null
-        engine.setPanelOpen(false)
+        engine.setPanelState(false)
         engine.setAutoSpin(false)
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
         vmStore.clear()
@@ -380,7 +380,7 @@ class OverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewM
 
     private fun openPanel() {
         if (panelView != null) return
-        engine.setPanelOpen(true)
+        engine.setPanelState(true)
         val view = ComposeView(this).also { it.attachOwners() }
         view.setContent {
             SanjoyTheme {
@@ -406,7 +406,7 @@ class OverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewM
         params.y = dp(28)
         val added = runCatching { windowManager.addView(view, params) }.isSuccess
         if (!added) {
-            engine.setPanelOpen(false)
+            engine.setPanelState(false)
             return
         }
         panelView = view
@@ -418,7 +418,7 @@ class OverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewM
         removeView(view)
         panelView = null
         panelParams = null
-        if (calibrationView == null) engine.setPanelOpen(false)
+        if (calibrationView == null) engine.setPanelState(false)
     }
 
     private fun consumeCalibrationRequest() {
@@ -430,7 +430,7 @@ class OverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewM
     private fun openCalibration() {
         if (calibrationView != null) return
         closePanel()
-        engine.setPanelOpen(true)
+        engine.setPanelState(true)
         val view = ComposeView(this).also { it.attachOwners() }
         view.setContent {
             SanjoyTheme {
@@ -457,7 +457,7 @@ class OverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewM
         params.gravity = Gravity.TOP or Gravity.START
         val added = runCatching { windowManager.addView(view, params) }.isSuccess
         if (!added) {
-            engine.setPanelOpen(false)
+            engine.setPanelState(false)
             return
         }
         calibrationView = view
@@ -485,7 +485,7 @@ class OverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewM
         val view = calibrationView ?: return
         removeView(view)
         calibrationView = null
-        if (panelView == null) engine.setPanelOpen(false)
+        if (panelView == null) engine.setPanelState(false)
     }
 
     private fun showGoldToast(message: String) {
