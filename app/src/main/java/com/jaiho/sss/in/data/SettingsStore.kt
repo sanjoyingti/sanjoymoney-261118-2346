@@ -1,161 +1,157 @@
 package com.jaiho.sss.`in`.data
 
 import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.MutablePreferences
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.doublePreferencesKey
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.emptyPreferences
-import androidx.datastore.preferences.core.floatPreferencesKey
-import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.map
+import android.content.SharedPreferences
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "sanjoy_money")
+private const val PREFS_NAME = "sanjoy_money"
 
 private object K {
-    val autoSpin = booleanPreferencesKey("auto_spin")
-    val alwaysWin = booleanPreferencesKey("always_win")
-    val jackpotHunter = booleanPreferencesKey("jackpot_hunter")
-    val stealth = booleanPreferencesKey("stealth")
-    val interval = intPreferencesKey("interval")
-    val bet = intPreferencesKey("bet")
-    val vibrate = booleanPreferencesKey("vibrate")
-    val jackpotToast = booleanPreferencesKey("jackpot_toast")
-    val keepScreenOn = booleanPreferencesKey("keep_screen_on")
-    val autoStartWithGame = booleanPreferencesKey("auto_start_with_game")
-    val startOnBoot = booleanPreferencesKey("start_on_boot")
-    val verbosity = intPreferencesKey("verbosity")
-    val spinX = floatPreferencesKey("spin_x")
-    val spinY = floatPreferencesKey("spin_y")
-    val collectX = floatPreferencesKey("collect_x")
-    val collectY = floatPreferencesKey("collect_y")
-    val spinCalibrated = booleanPreferencesKey("spin_calibrated")
-    val collectCalibrated = booleanPreferencesKey("collect_calibrated")
-    val spins = intPreferencesKey("stat_spins")
-    val wins = intPreferencesKey("stat_wins")
-    val near = intPreferencesKey("stat_near")
-    val jackpots = intPreferencesKey("stat_jackpots")
-    val biggest = doublePreferencesKey("stat_biggest")
-}
-
-private fun Preferences.toSettings(): Settings {
-    val d = Settings()
-    return Settings(
-        autoSpin = this[K.autoSpin] ?: d.autoSpin,
-        alwaysWin = this[K.alwaysWin] ?: d.alwaysWin,
-        jackpotHunter = this[K.jackpotHunter] ?: d.jackpotHunter,
-        stealth = this[K.stealth] ?: d.stealth,
-        intervalMs = (this[K.interval] ?: d.intervalMs).coerceIn(Settings.MIN_INTERVAL, Settings.MAX_INTERVAL),
-        betLevel = (this[K.bet] ?: d.betLevel).coerceIn(Settings.MIN_BET, Settings.MAX_BET),
-        vibrate = this[K.vibrate] ?: d.vibrate,
-        jackpotToast = this[K.jackpotToast] ?: d.jackpotToast,
-        keepScreenOn = this[K.keepScreenOn] ?: d.keepScreenOn,
-        autoStartWithGame = this[K.autoStartWithGame] ?: d.autoStartWithGame,
-        startOnBoot = this[K.startOnBoot] ?: d.startOnBoot,
-        logVerbosity = this[K.verbosity] ?: d.logVerbosity,
-        spinX = this[K.spinX] ?: d.spinX,
-        spinY = this[K.spinY] ?: d.spinY,
-        collectX = this[K.collectX] ?: d.collectX,
-        collectY = this[K.collectY] ?: d.collectY,
-        spinCalibrated = this[K.spinCalibrated] ?: d.spinCalibrated,
-        collectCalibrated = this[K.collectCalibrated] ?: d.collectCalibrated
-    )
-}
-
-private fun MutablePreferences.write(s: Settings) {
-    this[K.autoSpin] = s.autoSpin
-    this[K.alwaysWin] = s.alwaysWin
-    this[K.jackpotHunter] = s.jackpotHunter
-    this[K.stealth] = s.stealth
-    this[K.interval] = s.intervalMs
-    this[K.bet] = s.betLevel
-    this[K.vibrate] = s.vibrate
-    this[K.jackpotToast] = s.jackpotToast
-    this[K.keepScreenOn] = s.keepScreenOn
-    this[K.autoStartWithGame] = s.autoStartWithGame
-    this[K.startOnBoot] = s.startOnBoot
-    this[K.verbosity] = s.logVerbosity
-    this[K.spinX] = s.spinX
-    this[K.spinY] = s.spinY
-    this[K.collectX] = s.collectX
-    this[K.collectY] = s.collectY
-    this[K.spinCalibrated] = s.spinCalibrated
-    this[K.collectCalibrated] = s.collectCalibrated
+    const val AUTO_SPIN = "auto_spin"
+    const val ALWAYS_WIN = "always_win"
+    const val JACKPOT_HUNTER = "jackpot_hunter"
+    const val STEALTH = "stealth"
+    const val INTERVAL = "interval"
+    const val BET = "bet"
+    const val VIBRATE = "vibrate"
+    const val JACKPOT_TOAST = "jackpot_toast"
+    const val KEEP_SCREEN_ON = "keep_screen_on"
+    const val AUTO_START_WITH_GAME = "auto_start_with_game"
+    const val START_ON_BOOT = "start_on_boot"
+    const val VERBOSITY = "verbosity"
+    const val SPIN_X = "spin_x"
+    const val SPIN_Y = "spin_y"
+    const val COLLECT_X = "collect_x"
+    const val COLLECT_Y = "collect_y"
+    const val SPIN_CALIBRATED = "spin_calibrated"
+    const val COLLECT_CALIBRATED = "collect_calibrated"
+    const val SPINS = "stat_spins"
+    const val WINS = "stat_wins"
+    const val NEAR = "stat_near"
+    const val JACKPOTS = "stat_jackpots"
+    const val BIGGEST = "stat_biggest"
 }
 
 class SettingsStore(context: Context) {
 
-    private val data = context.applicationContext.dataStore
+    private val prefs: SharedPreferences =
+        context.applicationContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-    val settings: Flow<Settings> = data.data
-        .catch { emit(emptyPreferences()) }
-        .map { it.toSettings() }
+    private val _settings = MutableStateFlow(loadSettings())
+    val settings: StateFlow<Settings> = _settings.asStateFlow()
 
-    val stats: Flow<BotStats> = data.data
-        .catch { emit(emptyPreferences()) }
-        .map {
-            BotStats(
-                spins = it[K.spins] ?: 0,
-                wins = it[K.wins] ?: 0,
-                nearMisses = it[K.near] ?: 0,
-                jackpots = it[K.jackpots] ?: 0,
-                biggestWin = it[K.biggest] ?: 0.0
-            )
-        }
+    private val _stats = MutableStateFlow(loadStats())
+    val stats: StateFlow<BotStats> = _stats.asStateFlow()
+
+    private fun loadSettings(): Settings {
+        val d = Settings()
+        return Settings(
+            autoSpin = prefs.getBoolean(K.AUTO_SPIN, d.autoSpin),
+            alwaysWin = prefs.getBoolean(K.ALWAYS_WIN, d.alwaysWin),
+            jackpotHunter = prefs.getBoolean(K.JACKPOT_HUNTER, d.jackpotHunter),
+            stealth = prefs.getBoolean(K.STEALTH, d.stealth),
+            intervalMs = prefs.getInt(K.INTERVAL, d.intervalMs)
+                .coerceIn(Settings.MIN_INTERVAL, Settings.MAX_INTERVAL),
+            betLevel = prefs.getInt(K.BET, d.betLevel)
+                .coerceIn(Settings.MIN_BET, Settings.MAX_BET),
+            vibrate = prefs.getBoolean(K.VIBRATE, d.vibrate),
+            jackpotToast = prefs.getBoolean(K.JACKPOT_TOAST, d.jackpotToast),
+            keepScreenOn = prefs.getBoolean(K.KEEP_SCREEN_ON, d.keepScreenOn),
+            autoStartWithGame = prefs.getBoolean(K.AUTO_START_WITH_GAME, d.autoStartWithGame),
+            startOnBoot = prefs.getBoolean(K.START_ON_BOOT, d.startOnBoot),
+            logVerbosity = prefs.getInt(K.VERBOSITY, d.logVerbosity).coerceIn(0, 2),
+            spinX = prefs.getFloat(K.SPIN_X, d.spinX).coerceIn(0f, 1f),
+            spinY = prefs.getFloat(K.SPIN_Y, d.spinY).coerceIn(0f, 1f),
+            collectX = prefs.getFloat(K.COLLECT_X, d.collectX).coerceIn(0f, 1f),
+            collectY = prefs.getFloat(K.COLLECT_Y, d.collectY).coerceIn(0f, 1f),
+            spinCalibrated = prefs.getBoolean(K.SPIN_CALIBRATED, d.spinCalibrated),
+            collectCalibrated = prefs.getBoolean(K.COLLECT_CALIBRATED, d.collectCalibrated)
+        )
+    }
+
+    private fun loadStats(): BotStats = BotStats(
+        spins = prefs.getInt(K.SPINS, 0),
+        wins = prefs.getInt(K.WINS, 0),
+        nearMisses = prefs.getInt(K.NEAR, 0),
+        jackpots = prefs.getInt(K.JACKPOTS, 0),
+        biggestWin = prefs.getFloat(K.BIGGEST, 0f).toDouble()
+    )
+
+    private fun persist(s: Settings) {
+        prefs.edit()
+            .putBoolean(K.AUTO_SPIN, s.autoSpin)
+            .putBoolean(K.ALWAYS_WIN, s.alwaysWin)
+            .putBoolean(K.JACKPOT_HUNTER, s.jackpotHunter)
+            .putBoolean(K.STEALTH, s.stealth)
+            .putInt(K.INTERVAL, s.intervalMs.coerceIn(Settings.MIN_INTERVAL, Settings.MAX_INTERVAL))
+            .putInt(K.BET, s.betLevel.coerceIn(Settings.MIN_BET, Settings.MAX_BET))
+            .putBoolean(K.VIBRATE, s.vibrate)
+            .putBoolean(K.JACKPOT_TOAST, s.jackpotToast)
+            .putBoolean(K.KEEP_SCREEN_ON, s.keepScreenOn)
+            .putBoolean(K.AUTO_START_WITH_GAME, s.autoStartWithGame)
+            .putBoolean(K.START_ON_BOOT, s.startOnBoot)
+            .putInt(K.VERBOSITY, s.logVerbosity.coerceIn(0, 2))
+            .putFloat(K.SPIN_X, s.spinX.coerceIn(0f, 1f))
+            .putFloat(K.SPIN_Y, s.spinY.coerceIn(0f, 1f))
+            .putFloat(K.COLLECT_X, s.collectX.coerceIn(0f, 1f))
+            .putFloat(K.COLLECT_Y, s.collectY.coerceIn(0f, 1f))
+            .putBoolean(K.SPIN_CALIBRATED, s.spinCalibrated)
+            .putBoolean(K.COLLECT_CALIBRATED, s.collectCalibrated)
+            .apply()
+    }
+
+    private fun persistStats(s: BotStats) {
+        prefs.edit()
+            .putInt(K.SPINS, s.spins)
+            .putInt(K.WINS, s.wins)
+            .putInt(K.NEAR, s.nearMisses)
+            .putInt(K.JACKPOTS, s.jackpots)
+            .putFloat(K.BIGGEST, s.biggestWin.toFloat())
+            .apply()
+    }
 
     suspend fun update(block: (Settings) -> Settings) {
-        data.edit { prefs ->
-            prefs.write(block(prefs.toSettings()))
-        }
+        val next = block(_settings.value)
+        persist(next)
+        _settings.value = next
     }
 
     suspend fun saveStats(s: BotStats) {
-        data.edit { prefs ->
-            prefs[K.spins] = s.spins
-            prefs[K.wins] = s.wins
-            prefs[K.near] = s.nearMisses
-            prefs[K.jackpots] = s.jackpots
-            prefs[K.biggest] = s.biggestWin
-        }
+        persistStats(s)
+        _stats.value = s
     }
 
     suspend fun resetStats() {
-        data.edit { prefs ->
-            prefs[K.spins] = 0
-            prefs[K.wins] = 0
-            prefs[K.near] = 0
-            prefs[K.jackpots] = 0
-            prefs[K.biggest] = 0.0
-        }
+        val fresh = BotStats()
+        persistStats(fresh)
+        _stats.value = fresh
     }
 
     suspend fun restoreDefaults() {
-        data.edit { prefs ->
-            val current = prefs.toSettings()
-            val fresh = Settings()
-            prefs.write(
-                fresh.copy(
-                    spinX = current.spinX,
-                    spinY = current.spinY,
-                    collectX = current.collectX,
-                    collectY = current.collectY,
-                    spinCalibrated = current.spinCalibrated,
-                    collectCalibrated = current.collectCalibrated,
-                    keepScreenOn = current.keepScreenOn,
-                    autoStartWithGame = current.autoStartWithGame,
-                    startOnBoot = current.startOnBoot,
-                    logVerbosity = current.logVerbosity
-                )
-            )
-        }
+        val current = _settings.value
+        val next = Settings().copy(
+            spinX = current.spinX,
+            spinY = current.spinY,
+            collectX = current.collectX,
+            collectY = current.collectY,
+            spinCalibrated = current.spinCalibrated,
+            collectCalibrated = current.collectCalibrated,
+            keepScreenOn = current.keepScreenOn,
+            autoStartWithGame = current.autoStartWithGame,
+            startOnBoot = current.startOnBoot,
+            logVerbosity = current.logVerbosity
+        )
+        persist(next)
+        _settings.value = next
     }
 
     suspend fun resetAll() {
-        data.edit { it.clear() }
+        prefs.edit().clear().apply()
+        val freshSettings = Settings()
+        val freshStats = BotStats()
+        _settings.value = freshSettings
+        _stats.value = freshStats
     }
 }
