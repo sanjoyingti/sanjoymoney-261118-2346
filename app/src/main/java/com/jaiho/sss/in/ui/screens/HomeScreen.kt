@@ -1,4 +1,4 @@
-package com.jaiho.sss.in.ui.screens
+package com.jaiho.sss.`in`.ui.screens
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -37,16 +37,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import com.jaiho.sss.in.R
-import com.jaiho.sss.in.ui.MainViewModel
-import com.jaiho.sss.in.ui.components.GoldButton
-import com.jaiho.sss.in.ui.components.SectionCard
-import com.jaiho.sss.in.ui.components.SectionTitle
-import com.jaiho.sss.in.ui.components.StatusRow
-import com.jaiho.sss.in.ui.theme.Gold
-import com.jaiho.sss.in.ui.theme.Green
-import com.jaiho.sss.in.ui.theme.TextMuted
-import com.jaiho.sss.in.util.SystemUtils
+import com.jaiho.sss.`in`.R
+import com.jaiho.sss.`in`.ui.MainViewModel
+import com.jaiho.sss.`in`.ui.components.GoldButton
+import com.jaiho.sss.`in`.ui.components.SectionCard
+import com.jaiho.sss.`in`.ui.components.SectionTitle
+import com.jaiho.sss.`in`.ui.components.StatusRow
+import com.jaiho.sss.`in`.ui.theme.Gold
+import com.jaiho.sss.`in`.ui.theme.Green
+import com.jaiho.sss.`in`.ui.theme.TextMuted
+import com.jaiho.sss.`in`.util.SystemUtils
 
 @Composable
 fun HomeScreen(

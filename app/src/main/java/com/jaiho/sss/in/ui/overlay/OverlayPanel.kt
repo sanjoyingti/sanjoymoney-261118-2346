@@ -1,5 +1,4 @@
-=== ABOUT: The control panel that drops down from the gold bubble — every switch, the speed slider, the bet stepper, the counters and the live log ===
-package com.jaiho.sss.in.ui.overlay
+package com.jaiho.sss.`in`.ui.overlay
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -33,6 +32,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -41,22 +41,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.jaiho.sss.in.R
-import com.jaiho.sss.in.bot.BotEngine
-import com.jaiho.sss.in.data.Settings
-import com.jaiho.sss.in.data.SettingsStore
-import com.jaiho.sss.in.ui.components.SectionTitle
-import com.jaiho.sss.in.ui.theme.CardBg
-import com.jaiho.sss.in.ui.theme.CardLine
-import com.jaiho.sss.in.ui.theme.Gold
-import com.jaiho.sss.in.ui.theme.Green
-import com.jaiho.sss.in.ui.theme.Ink
-import com.jaiho.sss.in.ui.theme.InkSoft
-import com.jaiho.sss.in.ui.theme.TextMain
-import com.jaiho.sss.in.ui.theme.TextMuted
+import com.jaiho.sss.`in`.R
+import com.jaiho.sss.`in`.bot.BotEngine
+import com.jaiho.sss.`in`.data.Settings
+import com.jaiho.sss.`in`.data.SettingsStore
+import com.jaiho.sss.`in`.ui.components.SectionTitle
+import com.jaiho.sss.`in`.ui.theme.CardBg
+import com.jaiho.sss.`in`.ui.theme.CardLine
+import com.jaiho.sss.`in`.ui.theme.Gold
+import com.jaiho.sss.`in`.ui.theme.Green
+import com.jaiho.sss.`in`.ui.theme.Ink
+import com.jaiho.sss.`in`.ui.theme.InkSoft
+import com.jaiho.sss.`in`.ui.theme.TextMain
+import com.jaiho.sss.`in`.ui.theme.TextMuted
 import java.util.Locale
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -74,6 +75,7 @@ fun OverlayPanel(
     val settings by store.settings.collectAsState(Settings())
     val stats by engine.stats.collectAsState()
     val log by engine.log.collectAsState()
+    val active by engine.active.collectAsState()
 
     val spinOn = stringResource(R.string.toast_spin_on)
     val spinOff = stringResource(R.string.toast_spin_off)
@@ -119,7 +121,7 @@ fun OverlayPanel(
 
         ToggleRow(
             title = stringResource(R.string.toggle_auto_spin),
-            checked = engine.active.collectAsState().value,
+            checked = active,
             accent = Green
         ) { value ->
             scope.launch { store.update { it.copy(autoSpin = value) } }
@@ -273,7 +275,7 @@ fun OverlayPanel(
 private fun ToggleRow(
     title: String,
     checked: Boolean,
-    accent: androidx.compose.ui.graphics.Color = Gold,
+    accent: Color = Gold,
     onChange: (Boolean) -> Unit
 ) {
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
@@ -281,7 +283,7 @@ private fun ToggleRow(
         Switch(
             checked = checked,
             onCheckedChange = onChange,
-            colors = androidx.compose.material3.SwitchDefaults.colors(
+            colors = SwitchDefaults.colors(
                 checkedThumbColor = Ink,
                 checkedTrackColor = accent
             )

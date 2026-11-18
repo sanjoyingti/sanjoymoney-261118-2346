@@ -1,4 +1,4 @@
-package com.jaiho.sss.in.bot
+package com.jaiho.sss.`in`.bot
 
 import android.graphics.Rect
 import android.view.accessibility.AccessibilityNodeInfo

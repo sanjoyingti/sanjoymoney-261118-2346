@@ -1,12 +1,12 @@
-package com.jaiho.sss.in
+package com.jaiho.sss.`in`
 
 import android.app.Application
-import com.jaiho.sss.in.bot.BotEngine
-import com.jaiho.sss.in.data.SettingsStore
-import com.jaiho.sss.in.service.OverlayService
 import android.content.Intent
 import android.provider.Settings as AndroidSettings
 import androidx.core.content.ContextCompat
+import com.jaiho.sss.`in`.bot.BotEngine
+import com.jaiho.sss.`in`.data.SettingsStore
+import com.jaiho.sss.`in`.service.OverlayService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

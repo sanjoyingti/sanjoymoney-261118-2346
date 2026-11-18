@@ -1,4 +1,4 @@
-package com.jaiho.sss.in.service
+package com.jaiho.sss.`in`.service
 
 import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.GestureDescription
@@ -12,10 +12,10 @@ import android.util.DisplayMetrics
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
-import com.jaiho.sss.in.SanjoyApp
-import com.jaiho.sss.in.bot.BalanceParser
-import com.jaiho.sss.in.bot.NodeFinder
-import com.jaiho.sss.in.util.SystemUtils
+import com.jaiho.sss.`in`.SanjoyApp
+import com.jaiho.sss.`in`.bot.BalanceParser
+import com.jaiho.sss.`in`.bot.NodeFinder
+import com.jaiho.sss.`in`.util.SystemUtils
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 

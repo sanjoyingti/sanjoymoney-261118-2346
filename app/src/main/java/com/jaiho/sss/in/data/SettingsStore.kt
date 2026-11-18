@@ -1,4 +1,4 @@
-package com.jaiho.sss.in.data
+package com.jaiho.sss.`in`.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore

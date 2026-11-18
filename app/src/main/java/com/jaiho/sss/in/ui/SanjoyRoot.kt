@@ -1,4 +1,4 @@
-package com.jaiho.sss.in.ui
+package com.jaiho.sss.`in`.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -9,9 +9,9 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.jaiho.sss.in.ui.screens.CalibrationScreen
-import com.jaiho.sss.in.ui.screens.HomeScreen
-import com.jaiho.sss.in.ui.screens.SettingsScreen
+import com.jaiho.sss.`in`.ui.screens.CalibrationScreen
+import com.jaiho.sss.`in`.ui.screens.HomeScreen
+import com.jaiho.sss.`in`.ui.screens.SettingsScreen
 
 @Composable
 fun SanjoyRoot(vm: MainViewModel) {

@@ -1,4 +1,4 @@
-package com.jaiho.sss.in.ui.theme
+package com.jaiho.sss.`in`.ui.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography

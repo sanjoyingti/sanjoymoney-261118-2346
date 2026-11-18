@@ -1,4 +1,4 @@
-package com.jaiho.sss.in.data
+package com.jaiho.sss.`in`.data
 
 data class Settings(
     val autoSpin: Boolean = false,

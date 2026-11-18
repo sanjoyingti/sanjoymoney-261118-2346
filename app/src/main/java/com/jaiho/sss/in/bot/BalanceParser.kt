@@ -1,5 +1,4 @@
-=== ABOUT: Reads the money balance shown on the game screen so the bot knows whether the last spin won or lost ===
-package com.jaiho.sss.in.bot
+package com.jaiho.sss.`in`.bot
 
 import android.view.accessibility.AccessibilityNodeInfo
 

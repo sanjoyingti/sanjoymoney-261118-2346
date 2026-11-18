@@ -1,4 +1,4 @@
-package com.jaiho.sss.in.ui
+package com.jaiho.sss.`in`.ui
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -9,11 +9,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.jaiho.sss.in.AppContainer
-import com.jaiho.sss.in.data.BotStats
-import com.jaiho.sss.in.data.Settings
-import com.jaiho.sss.in.service.OverlayService
-import com.jaiho.sss.in.util.SystemUtils
+import com.jaiho.sss.`in`.AppContainer
+import com.jaiho.sss.`in`.data.BotStats
+import com.jaiho.sss.`in`.data.Settings
+import com.jaiho.sss.`in`.service.OverlayService
+import com.jaiho.sss.`in`.util.SystemUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

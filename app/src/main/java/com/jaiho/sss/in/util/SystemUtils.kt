@@ -1,4 +1,4 @@
-package com.jaiho.sss.in.util
+package com.jaiho.sss.`in`.util
 
 import android.content.ComponentName
 import android.content.Context
@@ -7,7 +7,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.PowerManager
 import android.provider.Settings as AndroidSettings
-import com.jaiho.sss.in.service.BotAccessibilityService
+import com.jaiho.sss.`in`.service.BotAccessibilityService
 
 object SystemUtils {
 

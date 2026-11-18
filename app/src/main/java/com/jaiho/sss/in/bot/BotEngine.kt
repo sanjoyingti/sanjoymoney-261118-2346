@@ -1,16 +1,15 @@
-=== ABOUT: Fixed the bot so it always reads the newest settings — every switch you flip takes effect immediately ===
-package com.jaiho.sss.in.bot
+package com.jaiho.sss.`in`.bot
 
 import android.content.Context
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
-import com.jaiho.sss.in.R
-import com.jaiho.sss.in.data.BotStats
-import com.jaiho.sss.in.data.Settings
-import com.jaiho.sss.in.data.SettingsStore
-import com.jaiho.sss.in.service.BotAccessibilityService
+import com.jaiho.sss.`in`.R
+import com.jaiho.sss.`in`.data.BotStats
+import com.jaiho.sss.`in`.data.Settings
+import com.jaiho.sss.`in`.data.SettingsStore
+import com.jaiho.sss.`in`.service.BotAccessibilityService
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

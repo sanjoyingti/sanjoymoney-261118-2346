@@ -1,4 +1,4 @@
-package com.jaiho.sss.in.ui.components
+package com.jaiho.sss.`in`.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -27,12 +27,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.jaiho.sss.in.ui.theme.CardBg
-import com.jaiho.sss.in.ui.theme.CardLine
-import com.jaiho.sss.in.ui.theme.Gold
-import com.jaiho.sss.in.ui.theme.Green
-import com.jaiho.sss.in.ui.theme.Ink
-import com.jaiho.sss.in.ui.theme.TextMuted
+import com.jaiho.sss.`in`.ui.theme.CardBg
+import com.jaiho.sss.`in`.ui.theme.CardLine
+import com.jaiho.sss.`in`.ui.theme.Gold
+import com.jaiho.sss.`in`.ui.theme.Green
+import com.jaiho.sss.`in`.ui.theme.Ink
+import com.jaiho.sss.`in`.ui.theme.TextMuted
 
 @Composable
 fun GoldButton(

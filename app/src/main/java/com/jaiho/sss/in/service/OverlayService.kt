@@ -1,5 +1,4 @@
-=== ABOUT: The floating gold "SM" circle service: it floats above the game, opens the control panel, moves calibration crosshairs and shows the jackpot pop-up ===
-package com.jaiho.sss.in.service
+package com.jaiho.sss.`in`.service
 
 import android.animation.ValueAnimator
 import android.app.Notification
@@ -41,15 +40,15 @@ import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
-import com.jaiho.sss.in.MainActivity
-import com.jaiho.sss.in.R
-import com.jaiho.sss.in.SanjoyApp
-import com.jaiho.sss.in.data.BotStats
-import com.jaiho.sss.in.data.Settings
-import com.jaiho.sss.in.data.SettingsStore
-import com.jaiho.sss.in.ui.overlay.CalibrationOverlay
-import com.jaiho.sss.in.ui.overlay.OverlayPanel
-import com.jaiho.sss.in.ui.theme.SanjoyTheme
+import com.jaiho.sss.`in`.MainActivity
+import com.jaiho.sss.`in`.R
+import com.jaiho.sss.`in`.SanjoyApp
+import com.jaiho.sss.`in`.data.BotStats
+import com.jaiho.sss.`in`.data.Settings
+import com.jaiho.sss.`in`.data.SettingsStore
+import com.jaiho.sss.`in`.ui.overlay.CalibrationOverlay
+import com.jaiho.sss.`in`.ui.overlay.OverlayPanel
+import com.jaiho.sss.`in`.ui.theme.SanjoyTheme
 import kotlin.math.abs
 import kotlin.math.roundToInt
 import kotlinx.coroutines.CoroutineScope
@@ -130,9 +129,6 @@ class OverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewM
         }
         jobs += scope.launch {
             store.settings.collect { settings -> applyKeepScreenOn(settings.keepScreenOn) }
-        }
-        jobs += scope.launch {
-            engine.log.collect { /* keeps the panel log fresh through the engine flow */ }
         }
         _running.value = true
         if (calibrationRequested) handler.postDelayed({ consumeCalibrationRequest() }, 500)
