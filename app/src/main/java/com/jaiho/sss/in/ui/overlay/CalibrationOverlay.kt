@@ -1,4 +1,4 @@
-package com.jaiho.sss.in.ui.overlay
+package com.jaiho.sss.`in`.ui.overlay
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -38,14 +38,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import com.jaiho.sss.in.R
-import com.jaiho.sss.in.ui.components.GoldButton
-import com.jaiho.sss.in.ui.components.SectionTitle
-import com.jaiho.sss.in.ui.theme.CardBg
-import com.jaiho.sss.in.ui.theme.CardLine
-import com.jaiho.sss.in.ui.theme.Gold
-import com.jaiho.sss.in.ui.theme.Green
-import com.jaiho.sss.in.ui.theme.TextMuted
+import com.jaiho.sss.`in`.R
+import com.jaiho.sss.`in`.ui.components.GoldButton
+import com.jaiho.sss.`in`.ui.components.SectionTitle
+import com.jaiho.sss.`in`.ui.theme.CardBg
+import com.jaiho.sss.`in`.ui.theme.CardLine
+import com.jaiho.sss.`in`.ui.theme.Gold
+import com.jaiho.sss.`in`.ui.theme.Green
+import com.jaiho.sss.`in`.ui.theme.TextMuted
 import kotlin.math.roundToInt
 
 @Composable

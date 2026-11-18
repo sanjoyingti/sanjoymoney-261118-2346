@@ -85,13 +85,13 @@ class OverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewM
     private val handler = Handler(Looper.getMainLooper())
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private val jobs = mutableListOf<Job>()
-    private val viewModelStore = ViewModelStore()
+    private val vmStore = ViewModelStore()
     private val lifecycleRegistry = LifecycleRegistry(this)
     private val savedStateController = SavedStateRegistryController.create(this)
 
     override val lifecycle: Lifecycle get() = lifecycleRegistry
     override val savedStateRegistry: SavedStateRegistry get() = savedStateController.savedStateRegistry
-    override fun getViewModelStore(): ViewModelStore = viewModelStore
+    override val viewModelStore: ViewModelStore get() = vmStore
 
     private lateinit var windowManager: WindowManager
     private var bubbleView: TextView? = null
@@ -175,7 +175,7 @@ class OverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewM
         engine.setPanelOpen(false)
         engine.setAutoSpin(false)
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-        viewModelStore.clear()
+        vmStore.clear()
         scope.cancel()
         super.onDestroy()
     }
