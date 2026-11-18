@@ -1,11 +1,10 @@
-=== ABOUT: Brings the bubble back automatically after the phone restarts, but only if you switched that on ===
-package com.jaiho.sss.in.receiver
+package com.jaiho.sss.`in`.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.jaiho.sss.in.SanjoyApp
-import com.jaiho.sss.in.util.SystemUtils
+import com.jaiho.sss.`in`.SanjoyApp
+import com.jaiho.sss.`in`.util.SystemUtils
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -25,7 +24,7 @@ class BootReceiver : BroadcastReceiver() {
                     app.container.engine.setAutoSpin(settings.autoSpin)
                 }
             } finally {
-                pending.finish()
+                runCatching { pending.finish() }
             }
         }
     }

@@ -42,7 +42,7 @@ class BotAccessibilityService : AccessibilityService() {
         if (event == null) return
         if (event.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return
         val pkg = event.packageName?.toString() ?: return
-        if (pkg == SystemUtils.GAME_PACKAGE) {
+        if (pkg == SystemUtils.GAME_PACKAGE || pkg in SystemUtils.GAME_PACKAGES) {
             gameForeground = true
             maybeAutoStart()
         } else if (pkg != packageName) {
@@ -63,9 +63,8 @@ class BotAccessibilityService : AccessibilityService() {
 
     fun isGameForeground(): Boolean {
         if (gameForeground) return true
-        return runCatching {
-            rootInActiveWindow?.packageName?.toString() == SystemUtils.GAME_PACKAGE
-        }.getOrDefault(false)
+        val pkg = runCatching { rootInActiveWindow?.packageName?.toString() }.getOrNull()
+        return pkg != null && pkg in SystemUtils.GAME_PACKAGES
     }
 
     fun findSpinNode(): AccessibilityNodeInfo? = NodeFinder.findSpin(rootSafe())
@@ -80,7 +79,7 @@ class BotAccessibilityService : AccessibilityService() {
 
     fun centerOf(node: AccessibilityNodeInfo): Point? {
         val rect = Rect()
-        if (!runCatching { node.getBoundsInScreen(rect) }.getOrDefault(false)) return null
+        runCatching { node.getBoundsInScreen(rect) }
         if (rect.width() <= 0 || rect.height() <= 0) return null
         return Point(rect.centerX(), rect.centerY())
     }
@@ -145,7 +144,7 @@ class BotAccessibilityService : AccessibilityService() {
     }
 
     private fun cleanup() {
-        container.engine.detach(this)
+        runCatching { container.engine.detach(this) }
         if (instance === this) instance = null
     }
 }

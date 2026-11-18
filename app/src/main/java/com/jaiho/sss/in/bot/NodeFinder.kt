@@ -39,7 +39,9 @@ object NodeFinder {
             if (words.any { lower == it || lower.contains(it) }) hits.add(node)
         }
         if (hits.isEmpty()) return null
-        return hits.firstOrNull { it.isClickable } ?: hits.minByOrNull { area(it) }
+        val clickable = hits.firstOrNull { it.isClickable }
+        if (clickable != null) return clickable
+        return hits.minByOrNull { area(it) }
     }
 
     private fun labelOf(node: AccessibilityNodeInfo): String? {
@@ -52,7 +54,7 @@ object NodeFinder {
 
     private fun area(node: AccessibilityNodeInfo): Int {
         val r = Rect()
-        if (!node.getBoundsInScreen(r)) return Int.MAX_VALUE
+        runCatching { node.getBoundsInScreen(r) }
         val w = r.width()
         val h = r.height()
         if (w <= 0 || h <= 0) return Int.MAX_VALUE
