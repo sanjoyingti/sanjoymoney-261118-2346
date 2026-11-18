@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ink">#0A0A0C</color>
-    <color name="gold">#FFD24A</color>
-    <color name="green">#1DB954</color>
-    <color name="launcher_bg">#FFD24A</color>
+    <color name="ink">#FF0A0A0C</color>
+    <color name="gold">#FFFFD24A</color>
+    <color name="green">#FF1DB954</color>
+    <color name="launcher_bg">#FFFFD24A</color>
 </resources>
