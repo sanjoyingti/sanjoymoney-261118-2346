@@ -67,8 +67,8 @@ class OverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewM
     companion object {
         private const val CHANNEL_ID = "sanjoy_bot_channel"
         private const val NOTIFICATION_ID = 4211
-        const val ACTION_STOP = "com.jaiho.sss.in.action.STOP"
-        const val ACTION_OPEN_PANEL = "com.jaiho.sss.in.action.PANEL"
+        const val ACTION_STOP = "com.sanjoymoney.jaiho.action.STOP"
+        const val ACTION_OPEN_PANEL = "com.sanjoymoney.jaiho.action.PANEL"
 
         private val _running = MutableStateFlow(false)
         val running: StateFlow<Boolean> = _running.asStateFlow()
@@ -137,6 +137,7 @@ class OverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewM
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when (intent?.action) {
             ACTION_STOP -> {
+                container.plannedStop()
                 stopSelf()
                 return START_NOT_STICKY
             }
@@ -181,16 +182,20 @@ class OverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewM
     }
 
     private fun startForegroundInternal() {
-        val notification = buildNotification()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            ServiceCompat.startForeground(
-                this,
-                NOTIFICATION_ID,
-                notification,
-                ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
-            )
-        } else {
-            startForeground(NOTIFICATION_ID, notification)
+        // Android 12+ may refuse a foreground start from the background;
+        // the bubble is still created either way.
+        runCatching {
+            val notification = buildNotification()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                ServiceCompat.startForeground(
+                    this,
+                    NOTIFICATION_ID,
+                    notification,
+                    ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
+                )
+            } else {
+                startForeground(NOTIFICATION_ID, notification)
+            }
         }
     }
 
@@ -390,7 +395,10 @@ class OverlayService : Service(), LifecycleOwner, SavedStateRegistryOwner, ViewM
                     scope = scope,
                     onCollapse = { closePanel() },
                     onCalibrate = { openCalibration() },
-                    onStopBot = { engine.setAutoSpin(false) },
+                    onStopBot = {
+                        container.plannedStop()
+                        engine.setAutoSpin(false)
+                    },
                     onToast = { message -> showGoldToast(message) }
                 )
             }

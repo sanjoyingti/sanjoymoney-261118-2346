@@ -10,17 +10,27 @@
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+    <!-- Package visibility (Android 11+) so the real Jaiho 777 can be seen and launched. -->
     <queries>
         <package android:name="com.jaiho.sss.in" />
         <package android:name="com.jaiho.sss" />
+        <package android:name="com.android.vending" />
         <intent>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="market" />
+        </intent>
     </queries>
 
     <application
-        android:name=".SanjoyApp"
+        android:name="com.jaiho.sss.in.SanjoyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:enableOnBackInvokedCallback="true"
@@ -32,7 +42,7 @@
         android:theme="@style/Theme.SanjoyMoney">
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.jaiho.sss.in.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode"
             android:exported="true"
             android:launchMode="singleTop">
@@ -43,7 +53,7 @@
         </activity>
 
         <service
-            android:name=".service.OverlayService"
+            android:name="com.jaiho.sss.in.service.OverlayService"
             android:exported="false"
             android:foregroundServiceType="specialUse">
             <property
@@ -52,7 +62,7 @@
         </service>
 
         <service
-            android:name=".service.BotAccessibilityService"
+            android:name="com.jaiho.sss.in.service.BotAccessibilityService"
             android:exported="true"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
@@ -64,7 +74,7 @@
         </service>
 
         <receiver
-            android:name=".receiver.BootReceiver"
+            android:name="com.jaiho.sss.in.receiver.BootReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

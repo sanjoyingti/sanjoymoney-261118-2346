@@ -13,6 +13,8 @@
     <string name="game_missing">Jaiho 777 is not installed</string>
     <string name="game_missing_title">Jaiho 777 not found</string>
     <string name="game_missing_body">Install the game (package com.jaiho.sss.in) from the Play Store or from the website of its provider, then come back and tap OPEN JAIHO 777 again.</string>
+    <string name="game_missing_toast">Jaiho 777 is not installed. Install it, then tap OPEN JAIHO 777 again.</string>
+    <string name="store_opened_hint">Store page opened - install Jaiho 777, then tap OPEN JAIHO 777 again</string>
     <string name="play_store">Play Store</string>
     <string name="copy_package">Copy package name</string>
     <string name="package_copied">Package name copied</string>
@@ -57,7 +59,7 @@
     <string name="reset_done">All data cleared</string>
     <string name="about_title">About</string>
     <string name="about_version">Sanjoy Money version %1$s</string>
-    <string name="about_note">This bot never touches the Jaiho 777 APK. The game is not modified, not repackaged and not bundled. Sanjoy Money only reads the screen through Accessibility and taps like a fast finger. No root, no VPN, no proxy, no server. That is why the game and its server cannot detect it.</string>
+    <string name="about_note">This bot never touches the Jaiho 777 APK. The game is not modified, not repackaged and not bundled. Sanjoy Money only reads the screen through Accessibility and taps like a fast finger. No root, no VPN, no proxy, no server. The bot has its own package (com.sanjoymoney.jaiho) so it installs next to the real game instead of replacing it.</string>
 
     <string name="calibrate_title">Calibration</string>
     <string name="calibrate_body">1. Open Jaiho 777 through the home screen.\n2. Open the SM panel and tap the crosshair button.\n3. Drag the SPIN crosshair onto the real spin button and the COLLECT crosshair onto the real collect or claim button.\n4. Save. The points are stored as screen percentages and are used whenever Accessibility cannot find the buttons.</string>
@@ -77,66 +79,7 @@
     <string name="bubble_desc">Sanjoy Money bubble. Tap for the control panel, long press to hide for 3 seconds.</string>
     <string name="bubble_hidden">Bubble hidden for 3 seconds</string>
 
-    <string name="panel_title">BOT CONTROL</string>
-    <string name="panel_hold">Engine pauses while this panel is open</string>
-    <string name="panel_collapse">Collapse to bubble</string>
-    <string name="panel_calibrate">Calibration crosshairs</string>
-    <string name="toggle_auto_spin">Auto-Spin</string>
-    <string name="toggle_always_win">Always-Win guard</string>
-    <string name="toggle_jackpot_hunter">Jackpot Hunter</string>
-    <string name="toggle_stealth">Stealth</string>
-    <string name="toggle_vibration">Vibration</string>
-    <string name="toggle_jackpot_toast">Jackpot toast</string>
-    <string name="interval_label">Interval: %1$d ms</string>
-    <string name="bet_label">Bet file</string>
-    <string name="bet_value">%1$d / 5</string>
-    <string name="bet_minus">Bet down</string>
-    <string name="bet_plus">Bet up</string>
-    <string name="counters">Counters</string>
-    <string name="counter_spins">Spins</string>
-    <string name="counter_wins">Wins</string>
-    <string name="counter_near">Near-misses</string>
-    <string name="counter_jackpots">Jackpots</string>
-    <string name="counter_biggest">Biggest win</string>
-    <string name="reset_counters">Reset counters</string>
-    <string name="counters_reset">Counters reset</string>
-    <string name="log_title">Log (last 100 lines)</string>
-    <string name="log_empty">No log lines yet</string>
-
-    <string name="notification_channel">Bot service</string>
-    <string name="notification_channel_desc">Keeps the floating bubble alive</string>
-    <string name="notification_title">Sanjoy Money is floating</string>
-    <string name="notification_text">Tap to open the control panel</string>
-    <string name="notification_stop">Stop</string>
-    <string name="notification_open_app">App</string>
-
     <string name="toast_jackpot">JACKPOT!</string>
     <string name="toast_spin_on">Auto-Spin on</string>
     <string name="toast_spin_off">Auto-Spin off</string>
-
-    <string name="log_engine_started">Engine started</string>
-    <string name="log_engine_stopped">Engine stopped</string>
-    <string name="log_engine_ready">Engine ready, waiting for Auto-Spin</string>
-    <string name="log_spin_node">Spin tapped by accessibility node</string>
-    <string name="log_spin_gesture">Spin node not clickable - gesture tap</string>
-    <string name="log_spin_calibrated">Spin node missing - tap at calibration point</string>
-    <string name="log_spin_not_found">Spin button not found</string>
-    <string name="log_balance">Balance read: %1$s</string>
-    <string name="log_win">Win detected (+%1$s)</string>
-    <string name="log_loss">Loss detected (-%1$s)</string>
-    <string name="log_near_miss">Near miss</string>
-    <string name="log_bet_down">Balance under session start - bet stepped down to %1$d</string>
-    <string name="log_bet_up">Balance over session start - bet stepped up to %1$d</string>
-    <string name="log_loss_streak">Three losses in a row - lowest bet and slower spins for 5 rounds</string>
-    <string name="log_jackpot">Jackpot signal: %1$s</string>
-    <string name="log_jackpot_tapped">Tapped \"%1$s\"</string>
-    <string name="log_jackpot_calibrated">No collect button - tap at calibration point</string>
-    <string name="log_jackpot_no_button">No collect or claim button found</string>
-    <string name="log_stealth_skip">Stealth skip - waiting %1$d ms</string>
-    <string name="log_paused_panel">Paused - panel open</string>
-    <string name="log_game_not_focused">Jaiho 777 not in front</string>
-    <string name="log_error">Error: %1$s</string>
-    <string name="log_service_wait">Accessibility service not connected</string>
-    <string name="log_stats_reset">Counters reset</string>
-    <string name="log_calibration_applied">Calibration saved - used as fallback</string>
 </resources>

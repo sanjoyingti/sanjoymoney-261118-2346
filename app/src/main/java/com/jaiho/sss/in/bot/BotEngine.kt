@@ -1,6 +1,7 @@
 package com.jaiho.sss.`in`.bot
 
 import android.content.Context
+import android.graphics.Point
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
@@ -163,6 +164,12 @@ class BotEngine(private val context: Context, private val store: SettingsStore) 
         scope.launch { store.saveStats(snapshot) }
     }
 
+    /** A few pixels of drift - real fingers never hit the same pixel twice. */
+    private fun jitterRadius(): Int =
+        (context.resources.displayMetrics.density * 3f).toInt().coerceIn(2, 12)
+
+    private fun gestureDuration(): Long = Random.nextLong(45L, 91L)
+
     private fun startLoop() {
         if (loopJob?.isActive == true) return
         loopJob = scope.launch {
@@ -213,22 +220,23 @@ class BotEngine(private val context: Context, private val store: SettingsStore) 
 
         val node = svc.findSpinNode()
         if (node != null) {
-            if (node.isClickable && svc.clickNode(node)) {
-                lastTapAt = System.currentTimeMillis()
-                logRes(R.string.log_spin_node)
-                return true
-            }
-            val centre = svc.centerOf(node)
-            if (centre != null && svc.tapAt(centre.x, centre.y)) {
+            val point = svc.randomPointIn(node, jitterRadius()) ?: svc.centerOf(node)
+            if (point != null && svc.tapAt(point.x, point.y, gestureDuration())) {
                 lastTapAt = System.currentTimeMillis()
                 logRes(R.string.log_spin_gesture)
+                return true
+            }
+            if (svc.clickNode(node)) {
+                lastTapAt = System.currentTimeMillis()
+                logRes(R.string.log_spin_node)
                 return true
             }
         }
         val latest = settings
         if (latest.spinCalibrated) {
-            val point = svc.pointAt(latest.spinX, latest.spinY)
-            if (svc.tapAt(point.x, point.y)) {
+            val raw = svc.pointAt(latest.spinX, latest.spinY)
+            val point = svc.jitterPoint(raw, jitterRadius())
+            if (svc.tapAt(point.x, point.y, gestureDuration())) {
                 lastTapAt = System.currentTimeMillis()
                 logRes(R.string.log_spin_calibrated)
                 return true
@@ -308,20 +316,21 @@ class BotEngine(private val context: Context, private val store: SettingsStore) 
         val button = svc.findCollectButton()
         if (button != null) {
             val text = button.text?.toString() ?: button.contentDescription?.toString() ?: ""
-            if (button.isClickable && svc.clickNode(button)) {
+            val point = svc.randomPointIn(button, jitterRadius()) ?: svc.centerOf(button)
+            if (point != null && svc.tapAt(point.x, point.y, gestureDuration())) {
                 logRes(R.string.log_jackpot_tapped, text)
                 return
             }
-            val centre = svc.centerOf(button)
-            if (centre != null && svc.tapAt(centre.x, centre.y)) {
+            if (svc.clickNode(button)) {
                 logRes(R.string.log_jackpot_tapped, text)
                 return
             }
         }
         val latest = settings
         if (latest.collectCalibrated) {
-            val point = svc.pointAt(latest.collectX, latest.collectY)
-            if (svc.tapAt(point.x, point.y)) {
+            val raw = svc.pointAt(latest.collectX, latest.collectY)
+            val point = svc.jitterPoint(raw, jitterRadius())
+            if (svc.tapAt(point.x, point.y, gestureDuration())) {
                 logRes(R.string.log_jackpot_calibrated)
                 return
             }
@@ -352,3 +361,6 @@ class BotEngine(private val context: Context, private val store: SettingsStore) 
 
     private fun money(value: Double): String = String.format(Locale.US, "%.2f", value)
 }
+
+@Suppress("unused")
+private fun BotEngine.unusedPointHelper(point: Point): Point = point

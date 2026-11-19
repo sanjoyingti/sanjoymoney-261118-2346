@@ -62,6 +62,7 @@ fun HomeScreen(
 
     var showMissing by remember { mutableStateOf(false) }
     var showGameMissing by remember { mutableStateOf(false) }
+    var storeOpened by remember { mutableStateOf(false) }
     var copied by remember { mutableStateOf(false) }
 
     val textOverlay = stringResource(R.string.req_overlay)
@@ -82,7 +83,11 @@ fun HomeScreen(
     }
 
     fun launchGameOrWarn() {
-        if (!vm.openGame()) showGameMissing = true
+        when (vm.openGame()) {
+            SystemUtils.LaunchOutcome.GAME -> storeOpened = false
+            SystemUtils.LaunchOutcome.STORE -> storeOpened = true
+            SystemUtils.LaunchOutcome.NOT_FOUND -> showGameMissing = true
+        }
     }
 
     fun attemptStart() {
@@ -145,6 +150,14 @@ fun HomeScreen(
         )
 
         GoldButton(text = stringResource(R.string.open_game), onClick = { launchGameOrWarn() })
+
+        if (storeOpened) {
+            Text(
+                text = stringResource(R.string.store_opened_hint),
+                color = Gold,
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
 
         SectionCard {
             SectionTitle(stringResource(R.string.checklist_title))

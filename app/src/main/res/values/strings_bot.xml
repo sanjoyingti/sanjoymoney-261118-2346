@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="panel_title">BOT CONTROL</string>
+    <string name="panel_hold">Engine pauses while this panel is open</string>
+    <string name="panel_collapse">Collapse to bubble</string>
+    <string name="panel_calibrate">Calibration crosshairs</string>
+    <string name="toggle_auto_spin">Auto-Spin</string>
+    <string name="toggle_always_win">Always-Win guard</string>
+    <string name="toggle_jackpot_hunter">Jackpot Hunter</string>
+    <string name="toggle_stealth">Stealth</string>
+    <string name="toggle_vibration">Vibration</string>
+    <string name="toggle_jackpot_toast">Jackpot toast</string>
+    <string name="interval_label">Interval: %1$d ms</string>
+    <string name="bet_label">Bet level</string>
+    <string name="bet_value">%1$d / 5</string>
+    <string name="bet_minus">Bet down</string>
+    <string name="bet_plus">Bet up</string>
+    <string name="counters">Counters</string>
+    <string name="counter_spins">Spins</string>
+    <string name="counter_wins">Wins</string>
+    <string name="counter_near">Near misses</string>
+    <string name="counter_jackpots">Jackpots</string>
+    <string name="counter_biggest">Biggest win</string>
+    <string name="counters_reset">Counters reset</string>
+    <string name="reset_counters">Reset counters</string>
+    <string name="log_title">Log</string>
+    <string name="log_empty">No log lines yet</string>
+
+    <string name="notification_channel">Sanjoy Money bot</string>
+    <string name="notification_channel_desc">Keeps the floating bot bubble alive above Jaiho 777</string>
+    <string name="notification_title">Sanjoy Money is running</string>
+    <string name="notification_text">Floating bot ready - it drives Jaiho 777 for you</string>
+    <string name="notification_stop">Stop</string>
+
+    <string name="log_engine_ready">Engine ready - accessibility connected</string>
+    <string name="log_service_wait">Service detached - waiting for accessibility</string>
+    <string name="log_engine_started">Auto-Spin started</string>
+    <string name="log_engine_stopped">Auto-Spin stopped</string>
+    <string name="log_paused_panel">Panel open - engine paused</string>
+    <string name="log_stats_reset">Counters reset</string>
+    <string name="log_game_not_focused">Jaiho 777 is not in front - waiting</string>
+    <string name="log_stealth_skip">Human pause: %1$d ms</string>
+    <string name="log_error">Error: %1$s</string>
+    <string name="log_spin_node">Spin tapped (button)</string>
+    <string name="log_spin_gesture">Spin tapped (finger gesture)</string>
+    <string name="log_spin_calibrated">Spin tapped (calibrated point)</string>
+    <string name="log_spin_not_found">Spin button not found yet</string>
+    <string name="log_win">Win +%1$s</string>
+    <string name="log_loss">Loss -%1$s</string>
+    <string name="log_loss_streak">Three losses in a row - bet lowered and pace slowed</string>
+    <string name="log_near_miss">Near miss detected</string>
+    <string name="log_balance">Balance %1$s</string>
+    <string name="log_bet_down">Bet level down to %1$d</string>
+    <string name="log_bet_up">Bet level up to %1$d</string>
+    <string name="log_jackpot">Jackpot screen: %1$s</string>
+    <string name="log_jackpot_tapped">Jackpot collected via button: %1$s</string>
+    <string name="log_jackpot_calibrated">Jackpot collected via calibrated point</string>
+    <string name="log_jackpot_no_button">Jackpot screen seen but no collect button</string>
+    <string name="log_auto_started">Jaiho 777 came to the front - bot started by itself</string>
+    <string name="log_calibration_applied">Calibration points saved</string>
+</resources>

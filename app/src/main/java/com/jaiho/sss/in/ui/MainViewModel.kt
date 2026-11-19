@@ -63,17 +63,23 @@ class MainViewModel(private val container: AppContainer) : ViewModel() {
         _installed.value = SystemUtils.isGameInstalled(ctx)
     }
 
-    fun openGame(): Boolean {
+    /**
+     * Opens the real game and, if the permissions allow it, arms the bubble so it appears
+     * as soon as Jaiho's window reaches the front.
+     */
+    fun openGame(): SystemUtils.LaunchOutcome {
         refresh()
+        if (SystemUtils.isOverlayGranted(ctx) && container.startOverlay()) {
+            container.armAutoStart()
+            if (SystemUtils.isAccessibilityEnabled(ctx)) container.engine.setAutoSpin(true)
+        }
         return SystemUtils.launchGame(ctx)
     }
 
     fun openPlayStore() {
-        val market = SystemUtils.playStoreIntent().addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        val market = SystemUtils.playStoreIntent()
         runCatching { ctx.startActivity(market) }
-            .onFailure {
-                runCatching { ctx.startActivity(SystemUtils.webStoreIntent().addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
-            }
+            .onFailure { runCatching { ctx.startActivity(SystemUtils.webStoreIntent()) } }
     }
 
     fun copyPackage() {
@@ -96,6 +102,7 @@ class MainViewModel(private val container: AppContainer) : ViewModel() {
     }
 
     fun stopBot() {
+        container.plannedStop()
         container.engine.setAutoSpin(false)
         container.stopOverlay()
     }
@@ -151,6 +158,7 @@ class MainViewModel(private val container: AppContainer) : ViewModel() {
 
     fun resetEverything() {
         viewModelScope.launch {
+            container.plannedStop()
             container.engine.setAutoSpin(false)
             container.stopOverlay()
             container.store.resetAll()

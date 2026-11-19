@@ -10,7 +10,7 @@ data class Settings(
     val vibrate: Boolean = true,
     val jackpotToast: Boolean = true,
     val keepScreenOn: Boolean = true,
-    val autoStartWithGame: Boolean = false,
+    val autoStartWithGame: Boolean = true,
     val startOnBoot: Boolean = false,
     val logVerbosity: Int = 1,
     val spinX: Float = 0.5f,

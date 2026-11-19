@@ -18,12 +18,24 @@ class AppContainer(context: Application) {
     val store: SettingsStore = SettingsStore(context)
     val engine: BotEngine = BotEngine(context, store)
 
+    /** Set when the user opens the game from the home screen, so the bubble starts on its own. */
+    @Volatile
+    var autoStartArmed: Boolean = false
+
+    fun armAutoStart() {
+        autoStartArmed = true
+    }
+
+    /** The user stopped the bot on purpose: forget the pending auto-start. */
+    fun plannedStop() {
+        autoStartArmed = false
+    }
+
     fun startOverlay(): Boolean {
         if (!AndroidSettings.canDrawOverlays(appContext)) return false
         if (OverlayService.running.value) return true
         val intent = Intent(appContext, OverlayService::class.java)
-        runCatching { ContextCompat.startForegroundService(appContext, intent) }
-        return true
+        return runCatching { ContextCompat.startForegroundService(appContext, intent) }.isSuccess
     }
 
     fun stopOverlay() {
